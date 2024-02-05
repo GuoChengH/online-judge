@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>个人中心</title>
+  <style>
+    .container .navbar{
+            width: 100%;
+            height: 50px;
+            background-color: black;
+            /* 给父级标签设置overflow，取消后续浮动float带来的影响 */
+            overflow: hidden;
+        }
+        .container .navbar a{
+            /* 设置a标签的宽度,a标签默认是行内元素，无法设置宽度*/
+            /* 设置a标签是行内块元素,这样允许我设置宽度 */
+            display: inline-block;
+            width: 80px;
+            /* 设置字体颜色 */
+            color: rgb(255, 255, 255);
+            /* 设置字体大小 */
+            font-size: large;
+            /* 设置文字的高度和当行懒一样的高度 */
+            line-height: 50px;
+            /* 去掉a标签的下划线 */
+            text-decoration: none;
+            /* 设置a标签中的文字居中 */
+            text-align: center;
+        }
+        /* 设置鼠标事件 */
+        .container .navbar a:hover
+        {
+            background-color: green;
+        }
+        .container .navbar .login
+        {
+            float:right;
+        }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #333;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+    
+    h1 {
+      margin: 0;
+    }
+    
+    nav {
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+    
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    nav ul li {
+      display: inline;
+    }
+    
+    nav ul li a {
+      display: inline-block;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+    }
+    
+    section {
+      padding: 20px;
+    }
+    
+    .profile {
+      text-align: center;
+    }
+    
+    .profile img {
+      width: 150px;
+      border-radius: 50%;
+    }
+    
+    .content {
+      margin-top: 20px;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+    
+    footer {
+      background-color: #333;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="navbar">
+        <!--导航栏-->
+        <a href="./">首页</a>
+        <a href="/all_questions">题库</a>
+        <a href="#">竞赛</a>
+        <a href="#">讨论</a>
+        <a href="#">求职</a>
+        <a href="/personcer">个人中心</a>
+
+        <a class="login" href="#">登录</a>
+
+      </div>
+    </div>
+  
+  <nav>
+    <ul>
+      <li><a href="#">个人信息</a></li>
+      <li><a href="#">-NIL-</a></li>
+      <li><a href="#">-NIL-</a></li>
+      <li><a href="#">设置</a></li>
+    </ul>
+  </nav>
+  
+  <section>
+    <div class="profile">
+      <!-- <img src="avatar.jpg" alt="头像"> -->
+      <h2 id="username">用户名:{{name}}</h2>
+      <h2 id="usernumber">账号:{{number}}</h2>
+      <h2 id="userpasswd">密码:{{passwd}}</h2>
+      <h2 id="userop">权限:{{op}}</h2>
+      <h2 id="userlevel">等级:{{level}}</h2>
+    </div>
+    `
+    <div class="content">
+      <!-- 这里填写个人中心的具体内容 -->
+    </div>
+  </section>
+  <footer>
+    <p>&copy; QQ:2834592128 --</p>
+  </footer>
+</body>
+</html>

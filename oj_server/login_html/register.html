@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Judge Login</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+        h2 {
+            text-align: center;
+            color: #237afb;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            width: 80px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #237afb;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #1856c9;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar a {
+            text-decoration-line: none;
+            color: rgb(36, 133, 65);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 引入jQuery CDN -->
+        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        <div class="logo">
+            <img src="http://mr.alicemana.top/ojlogo.png">
+        </div>
+        <h2>Register</h2>
+        
+        <div class="form-group">
+            <label for="username">名字:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="number">账号:</label>
+            <input type="text" id="number" name="number" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <input type="submit" class="submit-btn" onclick="submit()" value="注册并提交">
+    </div>
+</body>
+    <script>
+        function submit() {
+
+            //开始获取页面数据
+            var name_ = document.getElementById("username").value;
+            console.log(name_);
+            var number_ = document.getElementById("number").value;
+            console.log(number_);
+            var passwd_ = document.getElementById("password").value;  
+            console.log(passwd_);
+            var limit_ = 1;
+            var level_ = 1;
+            
+            var dealR = "/dealregister";
+            $.ajax({
+                method:'Post',
+                url:dealR,
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                data: JSON.stringify({
+                    'name':name_,
+                    'number':number_,
+                    'password':passwd_,
+                    'limit':limit_,
+                    'level':level_
+                }),
+                success:function (data){
+                    console.log(data);
+                    var _status = data.status;
+                    if(_status)
+                        alert("注册成功");
+                    else{
+                        alert("输入重复的账号，注册失败");
+                    }
+                    window.location.href = "/my_login";
+                }
+            });
+        }
+        
+    </script>
+</html>

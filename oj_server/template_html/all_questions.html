@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线OJ - 题目列表</title>
+    <style>
+        /* 起手式，基本网页开头都是这样 */
+        *{
+            /* 消除网页的默认外边距 */
+            margin:0px;
+            /* 消除网页的内边距 */
+            padding:0px;
+        }
+        html,
+        body{
+            width: 100%;
+            height: 100%;
+        }
+        .container .navbar{
+            width: 100%;
+            height: 50px;
+            background-color: black;
+            /* 给父级标签设置overflow，取消后续浮动float带来的影响 */
+            overflow: hidden;
+        }
+        .container .navbar a{
+            /* 设置a标签的宽度,a标签默认是行内元素，无法设置宽度*/
+            /* 设置a标签是行内块元素,这样允许我设置宽度 */
+            display: inline-block;
+            width: 80px;
+            /* 设置字体颜色 */
+            color: rgb(255, 255, 255);
+            /* 设置字体大小 */
+            font-size: large;
+            /* 设置文字的高度和当行懒一样的高度 */
+            line-height: 50px;
+            /* 去掉a标签的下划线 */
+            text-decoration: none;
+            /* 设置a标签中的文字居中 */
+            text-align: center;
+        }
+        /* 设置鼠标事件 */
+        .container .navbar a:hover
+        {
+            background-color: green;
+        }
+        .container .navbar .login
+        {
+            float:right;
+        }
+        .container .content{
+            /* 设置标签宽度 */
+            /* width: 800px; */
+            /* background-color: #ccc; */
+            background-color: rgba(205, 201, 201, 0.71);
+            height: 100%;
+            padding: 0;
+            /* 整体居中 */
+            margin: 0px auto;
+            /* 设置文字居中 */
+            text-align: center;
+            /* 设置上外边距 */
+            margin-top: 200px;
+
+        }
+        .container .content .font_{
+            /*设置标签元素，独占一行，可以设置高度和宽度  */
+            display: block;
+            /* 设置每个文字的上外边距 */
+            margin-top: 20px;
+            /* 去掉a标签的下划线 */
+            text-decoration: none;
+            /* 设置字体大小
+            font-size: large; */
+        }
+        .container .question_list{
+            width: 800px;
+            padding: 50px;
+            height: 100%;
+            margin: 0px auto;
+            /* background-color: #ccc; */
+            text-align: center;
+        }
+
+        .container .question_list table
+        {
+            width: 100%;
+            font-size: large;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin-top: 50px;
+            background-color: #f6fff7e8;
+        }
+        .container .question_list h1
+        {
+            color: green;
+        }
+        .container .question_list table .item
+        {
+            width: 100px;
+            height: 40px;
+            font-size: large;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+        }
+        .container .question_list table .item a
+        {
+            text-decoration: none;
+            color:black;
+        }
+        .container .question_list table .item a:hover{
+            color: rgb(0, 51, 255);
+            text-decoration: underline;
+        }
+        .container .footer{
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            /* background-color: #ccc; */
+            line-height: 50px;
+            color: #ccc;
+            margin-top: 15px;
+        }
+        /* .container .footer h4{
+
+        } */
+
+ 
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div>
+            <!--导航栏-->
+            
+                
+                <a href="../">首页</a>
+                <a href="/all_questions">题库</a>
+                <a href="#">竞赛</a>
+                <a href="#">讨论</a>
+                <a href="#">求职</a>
+                <!-- <a onclick="PersonCenter()">个人中心</a> -->
+                <!-- <a input type="submit" class="submit-btn" onclick="PersonCenter()" value="个人中心"> -->
+                <a href="/personcer">个人中心</a>
+                <a class="login" href="#">登录</a>
+            
+            </div>
+        </div>
+
+        <div class="question_list">
+            <h1>OnlineJudge题目列表</h1>
+            <table>
+                <tr>
+                    <th class="item">编号</th>
+                    <th class="item">标题</th>
+                    <th class="item">难度</th>
+                </tr>
+                {{#question_list}}
+                <tr>
+                    <td class="item">{{number}}</td>
+                    <td class="item"><a href="/question/{{number}}">{{title}}</a></td>
+                    <td class="item">{{star}}</td>
+                </tr>
+                {{/question_list}}
+            </table>
+        </div>
+        <div class="footer">
+            <hr>
+            <h4>QQ:2834592128</h4>
+        </div>
+    </div>
+
+</body>
+    <script>
+        function PersonCenter()
+        {
+            var cookie = document.cookie;
+            var pcurl = "/personcer/";
+            $.ajax({
+                method:'Get',
+                url:pcurl,
+                dataType:'json',
+                contentType:'application/json;charset=utf-8',
+                data:JSON.stringify({
+                    'cookie':cookie
+                }),
+                success:function(data){
+                    //成功返回结果
+
+                }
+            })
+        }
+    </script>
+
+</html>
