@@ -1,6 +1,6 @@
 #pragma once
 #include "compiler.hpp"
-#include<unistd.h>
+#include <unistd.h>
 #include "runner.hpp"
 #include "../comm/log.hpp"
 #include "../comm/util.hpp"
@@ -15,26 +15,32 @@ namespace ns_compile_and_run
     class CompileAndRun
     {
     public:
-        static void RemoveTempFile(const std::string& file_name)
+        static void RemoveTempFile(const std::string &file_name)
         {
-            //清理文件的个数是不确定的，但是有哪些我们是知道的
+            // 清理文件的个数是不确定的，但是有哪些我们是知道的
             std::string _src = PathUtil::Src(file_name);
-            if(FileUtil::IsFileExists(_src))unlink(_src.c_str());
-            
+            if (FileUtil::IsFileExists(_src))
+                unlink(_src.c_str());
+
             std::string _compiler_error = PathUtil::CompilerError(file_name);
-            if(FileUtil::IsFileExists(_compiler_error))unlink(_compiler_error.c_str());
-            
+            if (FileUtil::IsFileExists(_compiler_error))
+                unlink(_compiler_error.c_str());
+
             std::string _execute = PathUtil::Exe(file_name);
-            if(FileUtil::IsFileExists(_execute)) unlink(_execute.c_str());
+            if (FileUtil::IsFileExists(_execute))
+                unlink(_execute.c_str());
 
             std::string _stdin = PathUtil::Stdin(file_name);
-            if(FileUtil::IsFileExists(_stdin)) unlink(_stdin.c_str());
+            if (FileUtil::IsFileExists(_stdin))
+                unlink(_stdin.c_str());
 
             std::string _stdout = PathUtil::Stdout(file_name);
-            if(FileUtil::IsFileExists(_stdout)) unlink(_stdout.c_str());
+            if (FileUtil::IsFileExists(_stdout))
+                unlink(_stdout.c_str());
 
             std::string _stderr = PathUtil::Stderr(file_name);
-            if(FileUtil::IsFileExists(_stderr)) unlink(_stderr.c_str());
+            if (FileUtil::IsFileExists(_stderr))
+                unlink(_stderr.c_str());
         }
         static std::string CodeToDesc(int code, std::string file_name) // code >0 <0 ==0
         {
@@ -91,7 +97,7 @@ namespace ns_compile_and_run
         */
         static void Start(const std::string &in_json, std::string *out_json)
         {
-            LOG(INFO)<<"启动compile_and_run"<<"\n";
+            LOG(INFO) << "启动compile_and_run" << "\n";
             Json::Value in_value;
             Json::Reader reader;
             reader.parse(in_json, in_value); // 最后再处理差错问题
@@ -116,7 +122,7 @@ namespace ns_compile_and_run
             // 形成的文件名只具有唯一性，没有目录没有后缀
             // 毫秒计时间戳+原子性递增的唯一值：来保证唯一性
             file_name = FileUtil::UniqFileName(); // 形成唯一文件名字
-            LOG(DEBUG)<<"调用UniqFileName()形成唯一名字"<<file_name<<"\n";
+            LOG(DEBUG) << "调用UniqFileName()形成唯一名字" << file_name << "\n";
 
             run_result = Runner::Run(file_name, cpu_limit, men_limit);
             if (!FileUtil::WriteFile(PathUtil::Src(file_name), code)) // 形成临时src文件.cpp
@@ -131,7 +137,6 @@ namespace ns_compile_and_run
                 status_code = -3;
                 goto END;
             }
-
             run_result = Runner::Run(file_name, cpu_limit, men_limit);
             if (run_result < 0)
             {
@@ -149,17 +154,17 @@ namespace ns_compile_and_run
                 status_code = 0;
             }
         END:
-            std::cout<<"到达end语句"<<std::endl;
+            std::cout << "到达end语句" << std::endl;
             // status_code
             out_value["status"] = status_code;
             out_value["reason"] = CodeToDesc(status_code, file_name);
-            LOG(DEBUG)<<CodeToDesc(status_code, file_name);
+            LOG(DEBUG) << CodeToDesc(status_code, file_name);
             if (status_code == 0)
             {
                 // 整个过程全部成功 , 这时候才需要运行结果
                 std::string _stdout;
                 FileUtil::ReadFile(PathUtil::Stdout(file_name), &_stdout, true);
-                out_value["stdout"] = _stdout; 
+                out_value["stdout"] = _stdout;
             }
             else
             {
@@ -167,13 +172,13 @@ namespace ns_compile_and_run
                 FileUtil::ReadFile(PathUtil::CompilerError(file_name), &_stderr, true);
                 out_value["stderr"] = _stderr;
             }
-            
+
             // 序列化
 
             Json::StyledWriter writer;
             *out_json = writer.write(out_value);
 
-            //清理所有的临时文件
+            // 清理所有的临时文件
             RemoveTempFile(file_name);
         }
     };
