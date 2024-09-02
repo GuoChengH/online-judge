@@ -13,3 +13,5 @@ CREATE TABLE oj_questions (
     `tail` TEXT,                 -- 题目的测试用例，需要和header拼接形成完整代码
     PRIMARY KEY (`number`)       -- 将题目编号设置为主键
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+// 新增
